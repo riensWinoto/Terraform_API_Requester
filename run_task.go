@@ -28,6 +28,13 @@ func respCloser(respBody io.Closer) {
 	}
 }
 
+func tfTokenChecker(tfToken string) {
+	if tfToken == "" {
+		fmt.Println("Set TF_TOKEN environment first")
+		os.Exit(1)
+	}
+}
+
 func getWorkspaceId() string {
 	var jsonWorkspaceId any
 
@@ -73,6 +80,7 @@ func uploadConfig(uploadUrl string) {
 }
 
 func main() {
+	tfTokenChecker(tfToken)
 	wsID := getWorkspaceId()
 	uploadURL := getUploadUrl(wsID)
 	uploadConfig(uploadURL)
